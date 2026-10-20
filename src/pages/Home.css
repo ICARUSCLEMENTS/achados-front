@@ -1,0 +1,53 @@
+.pagina-inicial {
+    width: 1000px;
+    margin: auto;
+}
+
+.titulo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filtros {
+    display: grid;
+
+    input {
+        width: 100%;
+        height: 30px;
+    }
+
+    input::placeholder {
+        font-weight: 500;
+        color: darkgray;
+    }
+
+    .selects {
+        display: flex;
+        justify-content: space-between;
+
+        label {
+            display: flex;
+            width: 30%;
+            flex-direction: column;
+
+            select {
+                height: 30px;
+            }
+
+            select:invalid {
+                color: #999999;
+                
+                font-style: italic;
+            }
+
+
+            select option {
+                color: #333333;
+                font-style: normal;
+            }
+
+
+        }
+    }
+}
