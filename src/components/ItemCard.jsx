@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { nomeCampo } from "../utils/apiHelpers";
+import { nomeCampo } from "../services/itensService";
 import "./ItemCard.css"
 
 function ItemCard({ item }) {

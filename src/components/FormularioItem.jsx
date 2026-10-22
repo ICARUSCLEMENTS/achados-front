@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import api from "../services/api";
+import {
+  mensagemErro,
+} from "../services/api";
+
+import {
+  normalizarOpcoes,
+  valorCampo,
+  listarCategorias,
+  listarLocais,
+  buscarItem,
+  criarItem,
+  atualizarItem,
+} from "../services/itensService";
 import "./FormularioItem.css"
-import {mensagemErro, normalizarOpcoes, valorCampo} from "../utils/apiHelpers";
 
 const formularioVazio = {
   nome: "",
@@ -39,11 +50,13 @@ function FormularioItem() {
       setErro("");
       setErroOpcoes("");
 
-      const [resultadoCategorias, resultadoLocais] =
-        await Promise.allSettled([
-          api.get("/categorias"),
-          api.get("/locais"),
-        ]);
+      const [categoriasRecebidas, locaisRecebidos] = await Promise.all([
+        listarCategorias(),
+        listarLocais(),
+      ]);
+
+      setCategorias(normalizarOpcoes(categoriasRecebidas));
+      setLocais(normalizarOpcoes(locaisRecebidos));
 
       if (!ativo) return;
 
@@ -79,7 +92,7 @@ function FormularioItem() {
 
           if (!ativo) return;
 
-          const item = resposta.data?.item ?? resposta.data;
+          const item = await buscarItem(id);
 
           setForm({
             nome: item.nome ?? "",
@@ -133,26 +146,18 @@ function FormularioItem() {
     };
 
     try {
-      let resposta;
-
       if (editando) {
-        resposta = await api.put(
-          `/itens/${id}`,
-          dados
-        );
-      } else {
-        resposta = await api.post("/itens", dados);
-      }
+        await atualizarItem(id, dados);
 
-      const itemSalvo =
-        resposta.data?.item ?? resposta.data;
-
-      if (editando) {
         navigate(`/item/${id}`);
-      } else if (itemSalvo?.id != null) {
-        navigate(`/item/${itemSalvo.id}`);
       } else {
-        navigate("/");
+        const itemSalvo = await criarItem(dados);
+
+        if (itemSalvo?.id != null) {
+          navigate(`/item/${itemSalvo.id}`);
+        } else {
+          navigate("/");
+        }
       }
     } catch (erroApi) {
       setErro(mensagemErro(erroApi));

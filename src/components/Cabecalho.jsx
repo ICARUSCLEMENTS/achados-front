@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../services/api";
+import { mensagemErro } from "../services/api";
+import { buscarPerfil } from "../services/perfilService";
 import "./cabecalho.css"
-import { mensagemErro } from "../utils/apiHelpers";
 
 function Cabecalho() {
     const [aluno, setAluno] = useState(null);
@@ -11,8 +11,8 @@ function Cabecalho() {
     useEffect(() => {
         async function carregarAluno() {
             try {
-                const resposta = await api.get("/eu");
-                setAluno(resposta.data);
+                const dados = await buscarPerfil();
+                setAluno(dados);
             } catch (erroApi) {
                 setErro(mensagemErro(erroApi));
             }

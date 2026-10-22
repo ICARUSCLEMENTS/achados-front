@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import "./Home.css"
 import api from "../services/api";
 import ItemCard from "../components/ItemCard";
-import {extrairLista,  mensagemErro,  normalizarOpcoes} from "../utils/apiHelpers";
+import {
+  listarItens,
+  listarCategorias,
+  listarLocais,
+} from "../services/itensService";
+import { mensagemErro } from "../services/api";
 
 function Home() {
   const [itens, setItens] = useState([]);
@@ -25,27 +30,16 @@ function Home() {
 
     async function carregarFiltros() {
       try {
-        const [respostaCategorias, respostaLocais] =
+        const [dadosCategorias, dadosLocais] =
           await Promise.all([
-            api.get("/categorias"),
-            api.get("/locais"),
+            listarCategorias(),
+            listarLocais(),
           ]);
 
         if (!ativo) return;
 
-        setCategorias(
-          normalizarOpcoes(
-            respostaCategorias.data,
-            "categorias"
-          )
-        );
-
-        setLocais(
-          normalizarOpcoes(
-            respostaLocais.data,
-            "locais"
-          )
-        );
+        setCategorias(dadosCategorias);
+        setLocais(dadosLocais);
       } catch (erroApi) {
         if (ativo) {
           setErroFiltros(mensagemErro(erroApi));
@@ -68,33 +62,16 @@ function Home() {
       setCarregando(true);
       setErro("");
 
-      const params = {};
-
-      if (busca.trim()) {
-        params.busca = busca.trim();
-      }
-
-      if (status) {
-        params.status = status;
-      }
-
-      if (categoria) {
-        params.categoria = categoria;
-      }
-
-      if (local) {
-        params.local = local;
-      }
-
       try {
-        const resposta = await api.get("/itens", {
-          params,
+        const dados = await listarItens({
+          busca,
+          status,
+          categoria,
+          local,
         });
 
         if (ativo) {
-          setItens(
-            extrairLista(resposta.data, "itens")
-          );
+          setItens(dados);
         }
       } catch (erroApi) {
         if (ativo) {
@@ -138,71 +115,71 @@ function Home() {
             placeholder="Digite o que procura..."
           />
         </label>
-      
 
-      <div className="selects">
-        <label htmlFor="status">
-          Status
-          <select
-            id="status"
-            value={status}
-            onChange={(evento) =>
-              setStatus(evento.target.value)
-            }
-          >
-            <option value="">Todos</option>
-            <option value="aguardando">
-              Aguardando
-            </option>
-            <option value="devolvido">
-              Devolvido
-            </option>
-          </select>
-        </label>
 
-        <label htmlFor="categoria">
-          Categoria
-          <select
-            id="categoria"
-            value={categoria}
-            onChange={(evento) =>
-              setCategoria(evento.target.value)
-            }
-          >
-            <option value="">Todas</option>
-
-            {categorias.map((opcao) => (
-              <option
-                key={opcao.value}
-                value={opcao.value}
-              >
-                {opcao.label}
+        <div className="selects">
+          <label htmlFor="status">
+            Status
+            <select
+              id="status"
+              value={status}
+              onChange={(evento) =>
+                setStatus(evento.target.value)
+              }
+            >
+              <option value="">Todos</option>
+              <option value="aguardando">
+                Aguardando
               </option>
-            ))}
-          </select>
-        </label>
-
-        <label htmlFor="local">
-          Local
-          <select
-            id="local"
-            value={local}
-            onChange={(evento) =>
-              setLocal(evento.target.value)
-            }
-          >
-            <option value="">Todos</option>
-
-            {locais.map((opcao) => (
-              <option
-                key={opcao.value}
-                value={opcao.value}
-              >
-                {opcao.label}
+              <option value="devolvido">
+                Devolvido
               </option>
-            ))}
-          </select>
-        </label>
+            </select>
+          </label>
+
+          <label htmlFor="categoria">
+            Categoria
+            <select
+              id="categoria"
+              value={categoria}
+              onChange={(evento) =>
+                setCategoria(evento.target.value)
+              }
+            >
+              <option value="">Todas</option>
+
+              {categorias.map((opcao) => (
+                <option
+                  key={opcao.value}
+                  value={opcao.value}
+                >
+                  {opcao.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label htmlFor="local">
+            Local
+            <select
+              id="local"
+              value={local}
+              onChange={(evento) =>
+                setLocal(evento.target.value)
+              }
+            >
+              <option value="">Todos</option>
+
+              {locais.map((opcao) => (
+                <option
+                  key={opcao.value}
+                  value={opcao.value}
+                >
+                  {opcao.label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       </div>
 

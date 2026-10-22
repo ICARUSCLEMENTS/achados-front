@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./DetalheItem.css"
-import api from "../services/api";
 import {
   mensagemErro,
+} from "../services/api";
+
+import {
+  buscarItem,
   nomeCampo,
-} from "../utils/apiHelpers";
+  marcarItemDevolvido,
+  excluirItem as excluirItemAPI,
+} from "../services/itensService";
 
 function DetalheItem() {
   const { id } = useParams();
@@ -27,11 +32,8 @@ function DetalheItem() {
     setErro("");
 
     try {
-      const resposta = await api.get(`/itens/${id}`);
-
-      setItem(
-        resposta.data?.item ?? resposta.data
-      );
+      const dados = await buscarItem(id);
+      setItem(dados);
     } catch (erroApi) {
       setItem(null);
       setErro(mensagemErro(erroApi));
@@ -56,11 +58,9 @@ function DetalheItem() {
     setErro("");
 
     try {
-      await api.patch(
-        `/itens/${id}/devolver`,
-        {
-          devolvido_para: destinatario.trim(),
-        }
+      await marcarItemDevolvido(
+        id,
+        destinatario.trim()
       );
 
       setDestinatario("");
@@ -77,7 +77,7 @@ function DetalheItem() {
     setErro("");
 
     try {
-      await api.delete(`/itens/${id}`);
+      await excluirItemAPI(id);
 
       navigate("/");
     } catch (erroApi) {
