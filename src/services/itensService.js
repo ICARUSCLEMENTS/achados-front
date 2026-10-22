@@ -129,7 +129,6 @@ export async function listarLocais() {
 // POST - Cadastrar um item
 export async function criarItem(item) {
     const resposta = await api.post("/itens", item);
-
     return resposta.data?.item ?? resposta.data;
 }
 

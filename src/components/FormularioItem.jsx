@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import api, { mensagemErro } from "../services/api";
 import {
-  mensagemErro,
-} from "../services/api";
-
-import {
-  normalizarOpcoes,
-  valorCampo,
   listarCategorias,
   listarLocais,
-  buscarItem,
+  valorCampo,
   criarItem,
-  atualizarItem,
 } from "../services/itensService";
-import "./FormularioItem.css"
+import "./FormularioItem.css";
 
 const formularioVazio = {
   nome: "",
@@ -50,40 +44,32 @@ function FormularioItem() {
       setErro("");
       setErroOpcoes("");
 
-      const [categoriasRecebidas, locaisRecebidos] = await Promise.all([
-        listarCategorias(),
-        listarLocais(),
-      ]);
-
-      setCategorias(normalizarOpcoes(categoriasRecebidas));
-      setLocais(normalizarOpcoes(locaisRecebidos));
+      const [resultadoCategorias, resultadoLocais] =
+        await Promise.allSettled([
+          listarCategorias(),
+          listarLocais(),
+        ]);
 
       if (!ativo) return;
 
       if (resultadoCategorias.status === "fulfilled") {
-        setCategorias(
-          normalizarOpcoes(
-            resultadoCategorias.value.data,
-            "categorias"
-          )
-        );
+        setCategorias(resultadoCategorias.value);
       } else {
-        setErroOpcoes(
-          "Não foi possível carregar as categorias."
+        console.error(
+          "Erro ao carregar categorias:",
+          resultadoCategorias.reason
         );
+        setErroOpcoes("Não foi possível carregar as categorias.");
       }
 
       if (resultadoLocais.status === "fulfilled") {
-        setLocais(
-          normalizarOpcoes(
-            resultadoLocais.value.data,
-            "locais"
-          )
-        );
+        setLocais(resultadoLocais.value);
       } else {
-        setErroOpcoes(
-          "Não foi possível carregar os locais."
+        console.error(
+          "Erro ao carregar locais:",
+          resultadoLocais.reason
         );
+        setErroOpcoes("Não foi possível carregar os locais.");
       }
 
       if (id) {

@@ -17,11 +17,7 @@ export function mensagemErro(erro) {
 
     if (Array.isArray(detalhe)) {
         return detalhe
-            .map((item) =>
-                typeof item === "string"
-                    ? item
-                    : item?.msg ?? JSON.stringify(item)
-            )
+            .map((item) => item.msg ?? String(item))
             .join(" | ");
     }
 
