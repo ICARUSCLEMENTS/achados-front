@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import api from "../services/api";
-
-import {
-  mensagemErro,
-  normalizarOpcoes,
-  valorCampo,
-} from "../utils/apiHelpers";
+import "./FormularioItem.css"
+import {mensagemErro, normalizarOpcoes, valorCampo} from "../utils/apiHelpers";
 
 const formularioVazio = {
   nome: "",
@@ -44,7 +39,6 @@ function FormularioItem() {
       setErro("");
       setErroOpcoes("");
 
-      // Carrega categoria e local independentemente.
       const [resultadoCategorias, resultadoLocais] =
         await Promise.allSettled([
           api.get("/categorias"),
@@ -79,7 +73,6 @@ function FormularioItem() {
         );
       }
 
-      // Na edição, busca os dados existentes.
       if (id) {
         try {
           const resposta = await api.get(`/itens/${id}`);
@@ -198,7 +191,7 @@ function FormularioItem() {
 
       <form onSubmit={salvar}>
         <label htmlFor="nome">
-          Nome
+          Nome:
           <input
             id="nome"
             name="nome"
@@ -206,28 +199,31 @@ function FormularioItem() {
             value={form.nome}
             onChange={alterarCampo}
             required
+            className="inputs"
           />
         </label>
 
         <label htmlFor="descricao">
-          Descrição
+          Descrição:
           <textarea
             id="descricao"
             name="descricao"
             value={form.descricao}
             onChange={alterarCampo}
             required
+            className="inputs"
           />
         </label>
 
         <label htmlFor="categoria-form">
-          Categoria
+          Categoria:
           <select
             id="categoria-form"
             name="categoria"
             value={form.categoria}
             onChange={alterarCampo}
             required
+            className="inputs"
           >
             <option value="">Selecione uma categoria</option>
 
@@ -243,13 +239,14 @@ function FormularioItem() {
         </label>
 
         <label htmlFor="local-form">
-          Local
+          Local:
           <select
             id="local-form"
             name="local"
             value={form.local}
             onChange={alterarCampo}
             required
+            className="inputs"
           >
             <option value="">Selecione um local</option>
 
@@ -265,7 +262,7 @@ function FormularioItem() {
         </label>
 
         <label htmlFor="data_encontrado">
-          Data em que foi encontrado
+          Data em que foi encontrado:
           <input
             id="data_encontrado"
             name="data_encontrado"
@@ -273,20 +270,20 @@ function FormularioItem() {
             value={form.data_encontrado}
             onChange={alterarCampo}
             required
+            className="inputs"
           />
         </label>
 
         <div className="acoes-formulario">
+          <Link to={editando && id ? `/item/${id}` : "/"}>
+            Cancelar
+          </Link>
           <button
             type="submit"
             disabled={salvando}
           >
             {salvando ? "Salvando..." : "Salvar"}
           </button>
-
-          <Link to={editando && id ? `/item/${id}` : "/"}>
-            Cancelar
-          </Link>
         </div>
       </form>
     </section>

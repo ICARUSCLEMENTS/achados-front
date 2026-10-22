@@ -15,6 +15,8 @@
     input {
         width: 100%;
         height: 30px;
+        border-radius: 5px;
+        border: 2px black solid;
     }
 
     input::placeholder {
@@ -32,6 +34,8 @@
             flex-direction: column;
 
             select {
+                border-radius: 5px;
+                border: 2px black solid;
                 height: 30px;
             }
 
@@ -50,4 +54,11 @@
 
         }
     }
+}
+
+.lista-itens {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
 }

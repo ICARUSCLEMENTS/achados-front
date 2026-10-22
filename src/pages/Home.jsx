@@ -3,12 +3,7 @@ import { Link } from "react-router-dom";
 import "./Home.css"
 import api from "../services/api";
 import ItemCard from "../components/ItemCard";
-
-import {
-  extrairLista,
-  mensagemErro,
-  normalizarOpcoes,
-} from "../utils/apiHelpers";
+import {extrairLista,  mensagemErro,  normalizarOpcoes} from "../utils/apiHelpers";
 
 function Home() {
   const [itens, setItens] = useState([]);

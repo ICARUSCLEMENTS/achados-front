@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { nomeCampo } from "../utils/apiHelpers";
+import "./ItemCard.css"
 
 function ItemCard({ item }) {
     const status =
@@ -22,14 +23,16 @@ function ItemCard({ item }) {
                     Local: {nomeCampo(item.local)}
                 </p>
 
-                <p>
-                    Status: <span>{status}</span>
+                <p className="statusp">
+                    <span>{status}</span>
                 </p>
+                <button>
+                    <Link to={`/item/${item.id}`}>
+                        Ver detalhes
+                    </Link>
+                </button>
             </div>
 
-            <Link to={`/item/${item.id}`}>
-                Ver detalhes
-            </Link>
         </article>
     );
 }

@@ -1,0 +1,65 @@
+.item-card.status-devolvido {
+    .statusp {
+        background-color: lime;
+        border: 2px black solid;
+        border-radius: 10px;
+        padding: 5px 10px;
+        text-align: center;
+
+        span {
+            letter-spacing: 2px;
+            font-size: 20px;
+        }
+
+
+    }
+}
+
+.item-card.status-aguardando {
+    .statusp {
+        background-color: gray;
+        border: 2px black solid;
+        border-radius: 10px;
+        padding: 5px 10px;
+        text-align: center;
+
+        span {
+            letter-spacing: 2px;
+            font-size: 20px;
+        }
+
+
+    }
+}
+
+
+.item-card-conteudo {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 5px black;
+    width: 470px;
+    margin-top: 15px;
+    padding: 10px;
+    border: 2px black solid;
+    border-radius: 10px;
+
+    p {
+        margin: 5px;
+    }
+
+    button {
+        border: 2px black solid;
+        border-radius: 10px;
+        height: 35px;
+        margin: 5px;
+        width: 120px;
+        align-self: flex-end;
+        a {
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    }
+
+}

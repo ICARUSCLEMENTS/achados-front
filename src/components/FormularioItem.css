@@ -1,0 +1,40 @@
+.pagina-formulario {
+    width: 1000px;
+    margin: auto;
+}
+
+.pagina-formulario form {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagina-formulario .inputs {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.pagina-formulario .acoes-formulario {
+    align-self: flex-end;
+    margin-top: 10px;
+
+    button {
+        color: white;
+        background-color: rgb(50, 200, 0);
+        width: 70px;
+        height: 25px;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 1px 1px black;
+    }
+    
+    button:hover {
+        cursor: pointer;
+    }
+    
+    a {
+        margin-right: 10px;
+        color: red;
+        text-decoration: none;
+    }
+}

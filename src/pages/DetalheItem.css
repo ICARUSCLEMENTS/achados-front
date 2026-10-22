@@ -1,0 +1,270 @@
+.conteudo-principal:has(.pagina-detalhe) {
+    width: 100%;
+    max-width: 850px;
+    margin: 8px auto;
+}
+
+.pagina-detalhe {
+    width: 100%;
+    margin: 0;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    background: white;
+    color: #111;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.voltar-detalhe {
+    align-self: flex-start;
+    margin-bottom: 10px;
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.voltar-detalhe:hover {
+    text-decoration: underline;
+}
+
+.resumo-item {
+    display: grid;
+    grid-template-columns: 57px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    margin-bottom: 10px;
+}
+
+.imagem-item-placeholder {
+    position: relative;
+    width: 57px;
+    height: 57px;
+    border: 1px solid #333;
+    overflow: hidden;
+}
+
+.imagem-item-placeholder::before,
+.imagem-item-placeholder::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140%;
+    height: 1px;
+    background: #aaa;
+}
+
+.imagem-item-placeholder::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.imagem-item-placeholder::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.resumo-item-conteudo {
+    min-width: 0;
+}
+
+.resumo-item-conteudo h1 {
+    width: 100px;
+    margin: 7px 0 7px;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.pagina-detalhe .status-item {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.pagina-detalhe .status-item strong {
+    display: inline-block;
+    padding: 1px 7px;
+    border: 1px solid #222;
+    border-radius: 20px;
+    background: #fff;
+    color: #111;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.pagina-detalhe .status-item.status-devolvido strong {
+    background: #e8f5e9;
+    border-color: #28783b;
+    color: #246239;
+}
+
+.pagina-detalhe .dados-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    border: 0;
+}
+
+.pagina-detalhe .linha-dado {
+    display: grid;
+    grid-template-columns: 105px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 24px;
+}
+
+.pagina-detalhe .linha-dado dt {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pagina-detalhe .linha-dado dd {
+    min-width: 0;
+    margin: 0;
+    padding: 2px 0;
+    overflow-wrap: anywhere;
+    color: #555;
+    line-height: 1.2;
+}
+
+.pagina-detalhe .acoes-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.pagina-detalhe .acoes-item a,
+.pagina-detalhe .acoes-item button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 83px;
+    min-height: 24px;
+    padding: 2px 12px;
+
+    border: 1.5px solid #222;
+    border-radius: 7px;
+    background: #fff;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pagina-detalhe .acoes-item a:hover,
+.pagina-detalhe .acoes-item button:hover {
+    background: #eee;
+}
+
+.pagina-detalhe .confirmacao-exclusao {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px dashed #333;
+}
+
+.pagina-detalhe .confirmacao-exclusao h2 {
+    margin: 0 0 8px;
+    font-size: 14px;
+}
+
+.pagina-detalhe .confirmacao-exclusao p {
+    margin: 0 0 10px;
+}
+
+.pagina-detalhe .confirmacao-exclusao button {
+    padding: 4px 12px;
+    margin: 4px 5px 0 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #eee;
+    color: #111;
+    cursor: pointer;
+}
+
+.pagina-detalhe .devolucao-item {
+    margin-top: 24px;
+    padding: 8px;
+    border: 1px dashed #333;
+    border-radius: 0;
+    background: #fff;
+}
+
+.pagina-detalhe .devolucao-item h2 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.pagina-detalhe .devolucao-item form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 93px;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagina-detalhe .devolucao-item label {
+    display: block;
+    min-width: 0;
+    font-weight: 400;
+}
+
+.pagina-detalhe .devolucao-item input {
+    display: block;
+    width: 100%;
+    height: 22px;
+    padding: 2px 5px;
+
+    border: 1px solid #333;
+    border-radius: 2px;
+    background: #fff;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.pagina-detalhe .devolucao-item button {
+    align-self: flex-end;
+    justify-self: flex-end;
+    position: relative;
+    bottom: 1px;
+    left: 3px;
+    width: 90px;
+    height: 25px;
+    border: 1.5px solid #222;
+    border-radius: 7px;
+    background: #ddd;
+    color: #111;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.pagina-detalhe .devolucao-item button:hover {
+    background: #ccc;
+}
+
+.pagina-detalhe button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.pagina-detalhe p[role="alert"] {
+    margin: 8px 0;
+    color: #b42323;
+    overflow-wrap: anywhere;
+}

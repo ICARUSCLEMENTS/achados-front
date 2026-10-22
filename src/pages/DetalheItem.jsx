@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
+import "./DetalheItem.css"
 import api from "../services/api";
 import {
   mensagemErro,
@@ -111,42 +111,54 @@ function DetalheItem() {
     );
   }
 
+  const statusNormalizado = String(item?.status ?? "")
+    .trim()
+    .toLowerCase();
+
   return (
     <section className="pagina-detalhe">
-      <Link to="/">← Voltar</Link>
+      <Link to="/" className="voltar-detalhe">
+        ← Voltar
+      </Link>
 
-      <h1>{item.nome}</h1>
+      <div className="resumo-item">
 
-      {erro && (
-        <p role="alert">{erro}</p>
-      )}
+        <div className="resumo-item-conteudo">
+          <h1>{item.nome}</h1>
 
-      <p>
-        Status: <strong>{item.status}</strong>
-      </p>
+          <p className={`status-item status-${item.status}`}>
+            <strong>{item.status}</strong>
+          </p>
+        </div>
+      </div>
+
+      {erro && <p role="alert">{erro}</p>}
 
       <dl className="dados-item">
-        <dt>Descrição</dt>
-        <dd>{nomeCampo(item.descricao)}</dd>
+        <div className="linha-dado">
+          <dt>Descrição:</dt>
+          <dd>{nomeCampo(item.descricao)}</dd>
+        </div>
 
-        <dt>Categoria</dt>
-        <dd>{nomeCampo(item.categoria)}</dd>
+        <div className="linha-dado">
+          <dt>Categoria:</dt>
+          <dd>{nomeCampo(item.categoria)}</dd>
+        </div>
 
-        <dt>Local</dt>
-        <dd>{nomeCampo(item.local)}</dd>
+        <div className="linha-dado">
+          <dt>Local:</dt>
+          <dd>{nomeCampo(item.local)}</dd>
+        </div>
 
-        <dt>Encontrado em</dt>
-        <dd>{nomeCampo(item.data_encontrado)}</dd>
+        <div className="linha-dado">
+          <dt>Encontrado em:</dt>
+          <dd>{nomeCampo(item.data_encontrado)}</dd>
+        </div>
 
-        <dt>Devolvido para</dt>
-        <dd>{nomeCampo(item.devolvido_para)}</dd>
-
-        {item.data_devolucao && (
-          <>
-            <dt>Data da devolução</dt>
-            <dd>{item.data_devolucao}</dd>
-          </>
-        )}
+        <div className="linha-dado">
+          <dt>Devolvido para:</dt>
+          <dd>{nomeCampo(item.devolvido_para)}</dd>
+        </div>
       </dl>
 
       <div className="acoes-item">
@@ -166,16 +178,14 @@ function DetalheItem() {
         <section className="confirmacao-exclusao">
           <h2>Confirmar exclusão</h2>
 
-          <p>
-            Tem certeza de que deseja excluir este item?
-          </p>
+          <p>Tem certeza que deseja excluir?</p>
 
           <button
             type="button"
             onClick={excluirItem}
             disabled={excluindo}
           >
-            {excluindo ? "Excluindo..." : "Confirmar exclusão"}
+            {excluindo ? "Excluindo..." : "Excluir"}
           </button>
 
           <button
@@ -188,16 +198,20 @@ function DetalheItem() {
         </section>
       )}
 
-      {item.status === "aguardando" && (
+      {statusNormalizado === "aguardando" && (
         <section className="devolucao-item">
           <h2>Marcar como devolvido</h2>
 
           <form onSubmit={marcarComoDevolvido}>
             <label htmlFor="devolvido_para">
-              Nome de quem recebeu
+              <span className="texto-acessivel">
+                Nome de quem recebeu
+              </span>
+
               <input
                 id="devolvido_para"
                 type="text"
+                placeholder="Nome de quem recebeu"
                 value={destinatario}
                 onChange={(evento) =>
                   setDestinatario(evento.target.value)
@@ -206,13 +220,8 @@ function DetalheItem() {
               />
             </label>
 
-            <button
-              type="submit"
-              disabled={devolvendo}
-            >
-              {devolvendo
-                ? "Registrando..."
-                : "Confirmar devolução"}
+            <button type="submit" disabled={devolvendo}>
+              {devolvendo ? "Salvando..." : "Confirmar"}
             </button>
           </form>
         </section>
