@@ -6,6 +6,8 @@ import {
   listarLocais,
   valorCampo,
   criarItem,
+  atualizarItem,
+  buscarItem,
 } from "../services/itensService";
 import "./FormularioItem.css";
 

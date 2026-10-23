@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./DetalheItem.css"
-import {
-  mensagemErro,
-} from "../services/api";
+import { mensagemErro } from "../services/api";
 
 import {
   buscarItem,
   nomeCampo,
+  valorCampo,
   marcarItemDevolvido,
   excluirItem as excluirItemAPI,
 } from "../services/itensService";
@@ -137,29 +136,49 @@ function DetalheItem() {
       <dl className="dados-item">
         <div className="linha-dado">
           <dt>Descrição:</dt>
-          <dd>{nomeCampo(item.descricao)}</dd>
+          <dd>
+            {valorCampo(
+              nomeCampo(item, "descricao", "description")
+            )}
+          </dd>
         </div>
 
         <div className="linha-dado">
           <dt>Categoria:</dt>
-          <dd>{nomeCampo(item.categoria)}</dd>
+          <dd>
+            {valorCampo(
+              nomeCampo(item, "categoria", "categoria_nome", "category")
+            )}
+          </dd>
         </div>
 
         <div className="linha-dado">
           <dt>Local:</dt>
-          <dd>{nomeCampo(item.local)}</dd>
+          <dd>
+            {valorCampo(
+              nomeCampo(item, "local", "local_nome", "location")
+            )}
+          </dd>
         </div>
 
         <div className="linha-dado">
           <dt>Encontrado em:</dt>
-          <dd>{nomeCampo(item.data_encontrado)}</dd>
+          <dd>
+            {valorCampo(
+              nomeCampo(item, "data_encontrado", "dataEncontrado", "created_at")
+            )}
+          </dd>
         </div>
 
         <div className="linha-dado">
           <dt>Devolvido para:</dt>
-          <dd>{nomeCampo(item.devolvido_para)}</dd>
+          <dd>
+            {valorCampo(
+              nomeCampo(item, "devolvido_para", "devolvidoPara", "returned_to")
+            )}
+          </dd>
         </div>
-      </dl>
+      </dl> 
 
       <div className="acoes-item">
         <Link to={`/editar/${item.id}`}>

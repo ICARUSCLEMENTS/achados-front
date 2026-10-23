@@ -16,11 +16,27 @@ function ItemCard({ item }) {
                 <p>{item.descricao || "Sem descrição."}</p>
 
                 <p>
-                    Categoria: {nomeCampo(item.categoria)}
+                    Categoria:{" "}
+                    {nomeCampo(
+                        item,
+                        "categoria_nome",
+                        "nome_categoria",
+                        "categoria",
+                        "category_name",
+                        "category"
+                    ) || "Não informada"}
                 </p>
 
                 <p>
-                    Local: {nomeCampo(item.local)}
+                    Local:{" "}
+                    {nomeCampo(
+                        item,
+                        "local_nome",
+                        "nome_local",
+                        "local",
+                        "location_name",
+                        "location"
+                    ) || "Não informado"}
                 </p>
 
                 <p className="statusp">
